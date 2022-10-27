@@ -7,6 +7,7 @@ use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 require dirname(__DIR__) . '/vendor/autoload.php';
 
+
 class Chat implements MessageComponentInterface {
     public function onOpen(ConnectionInterface $conn) {
     }
@@ -23,8 +24,17 @@ class Chat implements MessageComponentInterface {
 
 
 
+use Ratchet\Http\HttpServer;
+use Ratchet\WebSocket\WsServer;
+
+    require dirname(__DIR__) . '/vendor/autoload.php';
+
     $server = IoServer::factory(
-        new Chat(),
+        new HttpServer(
+            new WsServer(
+                new Chat()
+            )
+        ),
         8080
     );
 
