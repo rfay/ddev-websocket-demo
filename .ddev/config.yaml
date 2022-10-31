@@ -17,16 +17,16 @@ use_dns_when_possible: true
 composer_version: "2"
 web_environment: []
 nodejs_version: "16"
+
 web_extra_exposed_ports:
   - name: ratchet
     container_port: 8080
     http_port: 3000
     https_port: 3001
-web_extra_daemons:
-  - name: ratchet
-    command: "php bin/chat-server.php"
-    directory: /var/www/html
 
+hooks:
+  post-start:
+    - exec: php bin/chat-server.php
 
 
 # Key features of ddev's config.yaml:
